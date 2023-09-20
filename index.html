@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Comments to Image</title>
     <script src="./node_modules/piexifjs/piexif.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script> -->
 </head>
 <body>
     <h1>Add Comments to Image</h1>
@@ -37,10 +37,16 @@
         imageUpload.addEventListener('change', function () {
 
             const uploadedImage = document.getElementById('uploadedImage');
-            
+            console.log(uploadedImage.src)
+
             // read image comment
             uploadedImage.onload = function () {
                 const exifObj = piexif.load(uploadedImage.src);
+                
+                console.log("-----------");
+                console.log(uploadedImage.src);
+                console.log(exifObj);
+
                 const comment = exifObj['0th'][270];
 
                 if (comment) {
@@ -77,15 +83,25 @@
 
         // Function to add a comment to an image using piexifjs
         function addCommentToImage(imageElement, comment) {
+            
+            let testDumpData = "";
+
             const img = new Image();
             img.onload = function () {
                 const exifObj = piexif.load(img.src);
                 exifObj['0th'][270] = comment; // 270 corresponds to "ImageDescription" tag
                 const updatedImageData = piexif.dump(exifObj);
                 const updatedImageSrc = piexif.insert(updatedImageData, img.src);
+
+                console.log("updatedImageSrc_onload:" + updatedImageSrc)
+
+                testDumpData = updatedImageSrc;
+
                 downloadLink.href = updatedImageSrc;
                 downloadLink.style.display = 'block';
             };
+            console.log("testDumpData_outload: " + testDumpData);
+            console.log("testDumpDataInElement: " + downloadLink.href);
             img.src = imageElement.src;
         }
 
