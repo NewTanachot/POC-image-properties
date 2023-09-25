@@ -19,7 +19,7 @@
 
     <!-- Displaying the uploaded image -->
     <h2>Uploaded Image:</h2>
-    <img id="uploadedImage" src="#" alt="Uploaded Image" width="300">
+    <img id="uploadedImage" src="" alt="Uploaded Image" width="300">
 
     <!-- Text input for adding comments -->
     <h2>Add Comments:</h2>
@@ -35,12 +35,14 @@
         const addCommentButton = document.getElementById('addComment');
         const downloadLink = document.getElementById('downloadLink');
 
+        const dummyImage = "https://s3.ananta.link/Bill_img/50004_1695464606.png?fbclid=IwAR0vNebO1RSkHPwn6WbUpIQErOkudgkP4btGwXxMfBNv5W411dqZVUnnQ2k";
+
         const secretKey = "Jnewnewnewnewnew"
 
         imageUpload.addEventListener('change', function () {
 
             const uploadedImage = document.getElementById('uploadedImage');
-            // console.log(uploadedImage.src)
+            console.log(uploadedImage.src)
 
             // read image comment
             uploadedImage.onload = function () {
@@ -51,7 +53,6 @@
                 // console.log(exifObj);
 
                 const comment = exifObj['0th'][270];
-                console.log(comment)
 
                 if (comment) {
 
